@@ -6,3 +6,44 @@ I got a lot of influence from thise places:
     http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen/
     http://nvie.com/posts/vim-flake8-flake8-for-vim/
     http://sontek.net/blog/detail/turning-vim-into-a-modern-python-ide
+
+Pathogen:
+  Help organize submodules!
+
+  I included pathogen as a symlink to a submodule instead of putting it directly
+  in the autoload directory. This way it will be treated in a similar way as
+  other submodules.
+
+
+Syntastic:
+  Do syntax checks of code.
+
+  To get this working I needed to install flake8. The problem was that I had
+  already installed pyflakes wich was in conflict with flake8. So I run:
+    sudo apt-get remove pyflakes 
+    sudo pip install flake8
+
+
+MiniBufExplorer:
+  Keep track of all files opened.
+
+  This works pretty well out of the box, but there is a really anoying thing
+  that happends if you whant to switch buffers without saving first. If you get
+  the message:
+    E37: No write since last change (add ! to override)
+  then you need to put "set hidden" in the vimrc-file.
+
+  Since I do not whant to use any of the proposed key-mappings to change window
+  (they are already catched in a higher level, the X-windowing system for
+  example), I have mapped the "§" button to the bufferswitching.
+
+Speller:
+  To get som spelling help.
+
+  This is not a regular module loaded from github. Its a builtin thing which
+  already exists in vim. But to make it easy to work with I have a personal
+  plugin to do some key-mapping (.vim/plugin/speller.vim). 
+
+  The language files for swedish needs to be downloaded aswell with:
+    curl -o spell/sv.utf-8.spl ftp://ftp.vim.org/pub/vim/runtime/spell/sv.utf-8.spl
+    curl -o spell/sv.utf-8.sug ftp://ftp.vim.org/pub/vim/runtime/spell/sv.utf-8.sug
