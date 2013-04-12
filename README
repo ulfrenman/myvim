@@ -6,6 +6,7 @@ I got a lot of influence from thise places:
     http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen/
     http://nvie.com/posts/vim-flake8-flake8-for-vim/
     http://sontek.net/blog/detail/turning-vim-into-a-modern-python-ide
+    https://github.com/Meldanya/dotfiles
 
 Pathogen:
   Help organize submodules!
