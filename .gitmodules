@@ -10,3 +10,6 @@
 [submodule "bundle/gnupg"]
 	path = bundle/gnupg
 	url = https://github.com/jamessan/vim-gnupg
+[submodule "bundle/gundo"]
+	path = bundle/gundo
+	url = http://github.com/sjl/gundo.vim.git

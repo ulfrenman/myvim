@@ -12,7 +12,7 @@ filetype plugin indent on
 
 " Wrapping and tabs. These are mostly needed for programming stuff but
 " we set it on this general vimrc to make it global since I like it!
-set textwidth=78
+"set textwidth=78
 set tabstop=4
 set shiftwidth=4
 set smarttab
@@ -38,6 +38,8 @@ set incsearch
 " set lenght of historyfile (.viminfo), defaults to 20
 set history=1000
 
+" Disable audio and visual error bells
+set noerrorbells visualbell t_vb=
 
 " ===========================================================================
 " MiniBufExplorer
@@ -50,6 +52,12 @@ set hidden
 " move between buffers:
 map § :bnext
 map ½ :bprevious
+
+" To avoid autoscrolling when switching buffers (I did not have this problem
+" before but now I have it and its anoying /Ulf 2013-04-25). From
+"   http://vim.wikia.com/wiki/Avoid_scrolling_when_switch_buffers
+au BufLeave * if !&diff | let b:winview = winsaveview() | endif
+au BufEnter * if exists('b:winview') && !&diff | call winrestview(b:winview) | endif
 
 
 " ===========================================================================
