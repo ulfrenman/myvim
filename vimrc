@@ -41,6 +41,11 @@ set history=1000
 " Disable audio and visual error bells
 set noerrorbells visualbell t_vb=
 
+" Vim5 and later versions support syntax highlighting.
+if has("syntax")
+    syntax on
+endif
+
 " ===========================================================================
 " MiniBufExplorer
 " ===========================================================================
