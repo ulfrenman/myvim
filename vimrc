@@ -103,7 +103,28 @@ nnoremap <space> za
 " ===========================================================================
 " Trailing whitespace
 " ===========================================================================
-" I do not like to have a lot of trailing whitespace at the end of lines. 
+" I do not like to have a lot of trailing whitespace at the end of lines.
 " Highlight it to make it obvious and easy to remove!
 highlight WhitespaceEOL ctermbg=red guibg=red
 match WhitespaceEOL /\s\+$/
+
+
+" ===========================================================================
+" Line numbering
+" ===========================================================================
+" The function cycles between 3 states:
+"   * No line numbering at all
+"   * Line numbers starts from 1 at the first line in the file
+"   * Relative numbering where 0 is at the cursor
+"
+" The cycling is mapped to the F11-key in normal mode.
+function! g:ToggleLineNumbering()
+    if &number
+        setlocal relativenumber
+    elseif &relativenumber
+        setlocal norelativenumber!
+    else
+        setlocal number
+    endif
+endfunction
+nnoremap <F11> :call g:ToggleLineNumbering()<CR>
