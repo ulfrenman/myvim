@@ -10,6 +10,7 @@ I got a lot of influence from thise places:
     http://blog.dispatched.ch/2009/05/24/vim-as-python-ide/
     http://vimcasts.org/
     http://arstechnica.com/information-technology/2011/11/two-decades-of-productivity-vims-20th-anniversary/
+    https://github.com/sjl/
 
 Pathogen:
   Help organize submodules!
@@ -23,7 +24,7 @@ Syntastic:
   Do syntax checks of code.
 
   To get this working I needed to install flake8. The problem was that I had
-  already installed pyflakes wich was in conflict with flake8. So I run:
+  already installed pyflakes which was in conflict with flake8. So I run:
     sudo apt-get remove pyflakes
     sudo pip install flake8
 
@@ -39,18 +40,18 @@ MiniBufExplorer:
 
   Since I do not whant to use any of the proposed key-mappings to change window
   (they are already catched in a higher level, the X-windowing system for
-  example), I have mapped the "§" button to the bufferswitching.
+  example), I have mapped the "§" button to the bufferswitching. This button is
+  on my Swedish keyboard the never used button between <TAB> and <ESC>. This
+  works really great for me I think!
+
 
 Speller:
-  To get som spelling help.
+  To get some spelling help.
 
   This is not a regular module loaded from github. Its a builtin thing which
   already exists in vim. But to make it easy to work with I have a personal
   plugin to do some key-mapping (.vim/plugin/speller.vim).
 
-  The language files for swedish needs to be downloaded aswell with:
-    curl -o spell/sv.utf-8.spl ftp://ftp.vim.org/pub/vim/runtime/spell/sv.utf-8.spl
-    curl -o spell/sv.utf-8.sug ftp://ftp.vim.org/pub/vim/runtime/spell/sv.utf-8.sug
 
 TODO:
   Things to check out.
