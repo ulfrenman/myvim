@@ -1,4 +1,4 @@
-all: submodules links
+all: make_master submodules update_modules links
 
 submodules:
 	git submodule init
@@ -10,3 +10,6 @@ links:
 
 update_modules:
 	git submodule foreach git pull origin master
+
+make_master:
+	git checkout master
