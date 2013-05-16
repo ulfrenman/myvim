@@ -12,7 +12,6 @@ filetype plugin indent on
 
 " Wrapping and tabs. These are mostly needed for programming stuff but
 " we set it on this general vimrc to make it global since I like it!
-"set textwidth=78
 set tabstop=4
 set shiftwidth=4
 set smarttab
@@ -46,6 +45,7 @@ if has("syntax")
     syntax on
 endif
 
+
 " ===========================================================================
 " MiniBufExplorer
 " ===========================================================================
@@ -55,8 +55,8 @@ set hidden
 " plugin for info on how to configure.
 " Since the <C-TAB> is not mappable in the terminal I use these mappings to
 " move between buffers:
-map § :bnext
-map ½ :bprevious
+map § :bnext<CR>
+map ½ :bprevious<CR>
 
 " To avoid autoscrolling when switching buffers (I did not have this problem
 " before but now I have it and its anoying /Ulf 2013-04-25). From
@@ -128,3 +128,35 @@ function! g:ToggleLineNumbering()
     endif
 endfunction
 nnoremap <F11> :call g:ToggleLineNumbering()<CR>
+
+
+" ===========================================================================
+" Syntastic
+" ===========================================================================
+" Make Syntastic only check the file on <F6>. It takes an annoyingly long time
+" to do the flake8 check at write so its disabled by default.
+let g:syntastic_mode_map = { 'mode': 'passive' }
+nnoremap <F6> :SyntasticToggleMode<CR>
+
+
+" ===========================================================================
+" Gundo
+" ===========================================================================
+" Configure the Gundo plugin and map <F5> to toggel it.
+nnoremap <F5> :GundoToggle<CR>
+" Put the preview window below the main textarea
+let g:gundo_preview_bottom = 1
+
+
+
+" ===========================================================================
+" Textwidth
+" ===========================================================================
+" If textwidth is not set (could be set by ftplugin/ or syntax/ files for
+" example) then set it.
+function! g:ToggleTextWidth()
+    if &textwidth == 0
+        setlocal textwidth=78
+    endif
+endfunction
+
