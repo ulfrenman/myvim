@@ -46,6 +46,17 @@ if has("syntax")
 endif
 
 
+
+" ===========================================================================
+" ctags
+" ===========================================================================
+" This could be used to generate the initial tags-file
+"   $ ctags -R t
+" After that the tags-file is automatically updated by the AutoTag plugin.
+"   http://vim.wikia.com/wiki/VimTip804
+set tags=tags;
+
+
 " ===========================================================================
 " MiniBufExplorer
 " ===========================================================================
