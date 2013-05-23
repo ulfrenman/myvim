@@ -129,7 +129,7 @@ match WhitespaceEOL /\s\+$/
 "   * Relative numbering where 0 is at the cursor
 "
 " The cycling is mapped to the F11-key in normal mode.
-function! g:ToggleLineNumbering()
+function! ToggleLineNumbering()
     if &number
         setlocal relativenumber
     elseif &relativenumber
@@ -138,7 +138,7 @@ function! g:ToggleLineNumbering()
         setlocal number
     endif
 endfunction
-nnoremap <F11> :call g:ToggleLineNumbering()<CR>
+nnoremap <F11> :call ToggleLineNumbering()<CR>
 
 
 " ===========================================================================
@@ -165,9 +165,39 @@ let g:gundo_preview_bottom = 1
 " ===========================================================================
 " If textwidth is not set (could be set by ftplugin/ or syntax/ files for
 " example) then set it.
-function! g:ToggleTextWidth()
+function! ToggleColorColumn()
     if &textwidth == 0
         setlocal textwidth=78
+        setlocal colorcolumn=+1
+        echo "textwidth=".&textwidth
+    elseif &colorcolumn != ""
+        setlocal colorcolumn=""
+        echo
+    else
+        setlocal colorcolumn=+1
+        echo "textwidth=".&textwidth
     endif
 endfunction
+function! AlterTextWidth(n)
+    if &textwidth == 0
+        " If textwidth is not set at all then default it to 78 and turn on the
+        " colorcolumn
+        setlocal textwidth=78
+        setlocal colorcolumn=+1
+        echo "textwidth=".&textwidth
+    elseif &colorcolumn != ""
+        " Only alter the textwidth if colorcolumn is set
+        let s:x = &textwidth + a:n
+        exe "setlocal textwidth=".s:x
+        if a:n > 0
+            echo "Increasing textwidth to ".&textwidth
+        else
+            echo "Decreasing textwidth to ".&textwidth
+        endif
+    endif
+endfunction
+nnoremap <F10> :call ToggleColorColumn()<CR>
+nnoremap <S-F10> :call AlterTextWidth(+1)<CR>
+nnoremap <C-F10> :call AlterTextWidth(-1)<CR>
+
 
