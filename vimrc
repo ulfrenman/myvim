@@ -45,7 +45,9 @@ if has("syntax")
     syntax on
 endif
 
-
+" The default leader is backslash which is two keys on an swedish keyboard.
+" Switch to ' instead.
+let mapleader = "'"
 
 " ===========================================================================
 " ctags
@@ -88,7 +90,9 @@ map Ä <c-t>
 " Formatting
 " ===========================================================================
 " To make paragraph formatting use shorter key-sequence
-map Q gwap
+" See :help gw
+"map Q gwap
+map Q gq}
 
 
 " ===========================================================================
@@ -131,11 +135,11 @@ match WhitespaceEOL /\s\+$/
 " The cycling is mapped to the F11-key in normal mode.
 function! ToggleLineNumbering()
     if &number
-        setlocal relativenumber
+        set relativenumber
     elseif &relativenumber
-        setlocal norelativenumber!
+        set norelativenumber!
     else
-        setlocal number
+        set number
     endif
 endfunction
 nnoremap <F11> :call ToggleLineNumbering()<CR>
@@ -167,14 +171,14 @@ let g:gundo_preview_bottom = 1
 " example) then set it.
 function! ToggleColorColumn()
     if &textwidth == 0
-        setlocal textwidth=78
-        setlocal colorcolumn=+1
+        set textwidth=78
+        set colorcolumn=+1
         echo "textwidth=".&textwidth
     elseif &colorcolumn != ""
-        setlocal colorcolumn=""
+        set colorcolumn=""
         echo
     else
-        setlocal colorcolumn=+1
+        set colorcolumn=+1
         echo "textwidth=".&textwidth
     endif
 endfunction
@@ -182,13 +186,13 @@ function! AlterTextWidth(n)
     if &textwidth == 0
         " If textwidth is not set at all then default it to 78 and turn on the
         " colorcolumn
-        setlocal textwidth=78
-        setlocal colorcolumn=+1
+        set textwidth=78
+        set colorcolumn=+1
         echo "textwidth=".&textwidth
     elseif &colorcolumn != ""
         " Only alter the textwidth if colorcolumn is set
         let s:x = &textwidth + a:n
-        exe "setlocal textwidth=".s:x
+        exe "set textwidth=".s:x
         if a:n > 0
             echo "Increasing textwidth to ".&textwidth
         else
@@ -201,3 +205,72 @@ nnoremap <S-F10> :call AlterTextWidth(+1)<CR>
 nnoremap <C-F10> :call AlterTextWidth(-1)<CR>
 
 
+" ===========================================================================
+" Simplyfy editing of vimrc
+" ===========================================================================
+" This is from:
+"   http://learnvimscriptthehardway.stevelosh.com/chapters/07.html
+nnoremap <leader>ev :split $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+
+
+" Highlight Word
+"
+" This mini-plugin provides a few mappings for highlighting words temporarily.
+"
+" Sometimes you're looking at a hairy piece of code and would like a certain
+" word or two to stand out temporarily. You can search for it, but that only
+" gives you one color of highlighting. Now you can use <leader>N where N is
+" a number from 1-6 to highlight the current word in a specific color.
+
+function! HiInterestingWord(n)
+    " Save our location.
+    normal! mz
+
+    " Yank the current word into the z register.
+    normal! "zyiw
+
+    " Calculate an arbitrary match ID. Hopefully nothing else is using it.
+    let mid = 86750 + a:n
+
+    " Clear existing matches, but don't worry if they don't exist.
+    silent! call matchdelete(mid)
+
+    " Construct a literal pattern that has to match at boundaries.
+    let pat = '\V\<' . escape(@z, '\') . '\>'
+
+    " Actually match the words.
+    call matchadd("InterestingWord" . a:n, pat, 1, mid)
+
+    " Move back to our original location.
+    normal! `z
+endfunction
+
+" Mappings
+nnoremap <silent> <leader>1 :call HiInterestingWord(1)<cr>
+nnoremap <silent> <leader>2 :call HiInterestingWord(2)<cr>
+nnoremap <silent> <leader>3 :call HiInterestingWord(3)<cr>
+nnoremap <silent> <leader>4 :call HiInterestingWord(4)<cr>
+nnoremap <silent> <leader>5 :call HiInterestingWord(5)<cr>
+nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
+
+
+hi def InterestingWord1 cterm=bold ctermfg=8 ctermbg=1
+hi def InterestingWord2 cterm=bold ctermfg=8 ctermbg=2
+hi def InterestingWord3 cterm=bold ctermfg=0 ctermbg=3
+hi def InterestingWord4 cterm=bold ctermfg=8 ctermbg=4
+hi def InterestingWord5 cterm=bold ctermfg=8 ctermbg=5
+hi def InterestingWord6 cterm=bold ctermfg=8 ctermbg=6
+hi def InterestingWord7 cterm=bold ctermfg=0 ctermbg=7
+
+
+" ===========================================================================
+" Scrolling
+" ===========================================================================
+" Make shift-up-down scroll the window up-down 2 lines without moving the
+" cursor
+map <S-Up> 2<C-Y>
+map <S-Down> 2<C-E>
+" Scroll window before the cursor reaches the top and bottom of the window.
+set scrolloff=2
