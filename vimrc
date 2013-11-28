@@ -215,7 +215,11 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 
 
 
+" ===========================================================================
 " Highlight Word
+"
+" This piece is copied and modified from:
+"   https://bitbucket.org/sjl/dotfiles/src/tip/vim/vimrc
 "
 " This mini-plugin provides a few mappings for highlighting words temporarily.
 "
@@ -234,14 +238,27 @@ function! HiInterestingWord(n)
     " Calculate an arbitrary match ID. Hopefully nothing else is using it.
     let mid = 86750 + a:n
 
-    " Clear existing matches, but don't worry if they don't exist.
-    silent! call matchdelete(mid)
-
     " Construct a literal pattern that has to match at boundaries.
     let pat = '\V\<' . escape(@z, '\') . '\>'
 
-    " Actually match the words.
-    call matchadd("InterestingWord" . a:n, pat, 1, mid)
+    " See if the a match with the given id and pattern (the thing under the
+    " cursor) alredy eixts. If the match do exist just the match should be
+    " removed, otherwise the new match should be created (and the old
+    " removed).
+    let match_exist = 0
+    for i in getmatches()
+        if i.id == mid && i.pattern == pat
+            let match_exist += mid
+        endif
+    endfor
+
+    " Clear existing matches, but don't worry if they don't exist.
+    silent! call matchdelete(mid)
+
+    " Actually match the words, but only if no previous match exists.
+    if match_exist == 0
+        call matchadd("InterestingWord" . a:n, pat, 1, mid)
+    endif
 
     " Move back to our original location.
     normal! `z
