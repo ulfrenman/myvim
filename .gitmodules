@@ -12,7 +12,7 @@
 	url = https://github.com/jamessan/vim-gnupg
 [submodule "bundle/gundo"]
 	path = bundle/gundo
-	url = http://github.com/sjl/gundo.vim.git
+	url = https://github.com/sjl/gundo.vim.git
 [submodule "bundle/AutoTag"]
 	path = bundle/AutoTag
 	url = https://github.com/vim-scripts/AutoTag.git
@@ -22,3 +22,6 @@
 [submodule "bundle/pydoc"]
 	path = bundle/pydoc
 	url = https://github.com/fs111/pydoc.vim.git
+[submodule "bundle/fugitive"]
+	path = bundle/fugitive
+	url = https://github.com/tpope/vim-fugitive.git
