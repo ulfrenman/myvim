@@ -19,3 +19,4 @@ endfunction
 hi SpellBad ctermfg=White
 
 nmap <silent> <F12> :call ToggleSpell()<CR>
+inoremap <F12> <ESC>:call ToggleSpell()<CR>a

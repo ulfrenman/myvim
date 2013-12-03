@@ -143,6 +143,7 @@ function! ToggleLineNumbering()
     endif
 endfunction
 nnoremap <F11> :call ToggleLineNumbering()<CR>
+inoremap <F11> <ESC>:call ToggleLineNumbering()<CR>a
 
 
 " ===========================================================================
@@ -201,6 +202,7 @@ function! AlterTextWidth(n)
     endif
 endfunction
 nnoremap <F10> :call ToggleColorColumn()<CR>
+inoremap <F10> <ESC>:call ToggleColorColumn()<CR>a
 nnoremap <S-F10> :call AlterTextWidth(+1)<CR>
 nnoremap <C-F10> :call AlterTextWidth(-1)<CR>
 
