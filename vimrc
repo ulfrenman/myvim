@@ -24,6 +24,8 @@ set showmatch
 
 " always show statusline
 set laststatus=2
+" Emulate statusline, but use full- instead of relative-path
+set statusline=%<[%-0.20{getcwd()}]\ %F\ %h%m%r%y%=%-14.(%l,%c%V%)\ %P
 
 " highlight previous search pattern
 set hlsearch
@@ -76,6 +78,14 @@ map ½ :bprevious<CR>
 "   http://vim.wikia.com/wiki/Avoid_scrolling_when_switch_buffers
 au BufLeave * if !&diff | let b:winview = winsaveview() | endif
 au BufEnter * if exists('b:winview') && !&diff | call winrestview(b:winview) | endif
+
+" MiniBufExpl Colors
+hi MBENormal               cterm=NONE ctermfg=2 ctermbg=0
+hi MBEChanged              cterm=NONE ctermfg=1 ctermbg=0
+hi MBEVisibleNormal        cterm=NONE ctermfg=2 ctermbg=0
+hi MBEVisibleChanged       cterm=NONE ctermfg=1 ctermbg=0
+hi MBEVisibleActiveNormal  cterm=NONE ctermfg=0 ctermbg=7
+hi MBEVisibleActiveChanged cterm=NONE ctermfg=1 ctermbg=7
 
 
 " ===========================================================================
