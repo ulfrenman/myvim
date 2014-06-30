@@ -109,7 +109,7 @@ map Q gq}
 " Diff
 " ===========================================================================
 " How will vimdiff will work and look
-set diffopt=filler,context:1
+set diffopt=vertical,filler,context:1
 if &diff
   colorscheme pablo
 endif
