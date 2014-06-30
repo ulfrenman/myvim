@@ -76,8 +76,13 @@ map ½ :bprevious<CR>
 " To avoid autoscrolling when switching buffers (I did not have this problem
 " before but now I have it and its anoying /Ulf 2013-04-25). From
 "   http://vim.wikia.com/wiki/Avoid_scrolling_when_switch_buffers
-au BufLeave * if !&diff | let b:winview = winsaveview() | endif
-au BufEnter * if exists('b:winview') && !&diff | call winrestview(b:winview) | endif
+" A bug was reproted and fixed in the code by adding "unlet! b:winview |".
+" This bug made SyncWin behave strangely. See here for bug info:
+"   https://github.com/garbas/vim-snipmate/issues/161
+" Still not working. Adding "UR_" to var since it seems to be conflicting in
+" some weird way with something else. Seems to be working now.
+au BufLeave * if !&diff | let b:UR_winview = winsaveview() | endif
+au BufEnter * if exists('b:UR_winview') && !&diff | call winrestview(b:UR_winview) | unlet! b:UR_winview | endif
 
 " MiniBufExpl Colors
 hi MBENormal               cterm=NONE ctermfg=2 ctermbg=0
@@ -303,3 +308,28 @@ map <S-Up> 2<C-Y>
 map <S-Down> 2<C-E>
 " Scroll window before the cursor reaches the top and bottom of the window.
 set scrolloff=2
+
+" Bind all the window together for scrolling
+"   http://stackoverflow.com/a/18466534/42580
+let s:sync_win = 0
+function SyncWin()
+
+  let nr = winnr()
+  let s:sync_win = 1 - s:sync_win
+
+  if ! s:sync_win
+    "windo set noscrollbind nocursorbind
+    windo set noscrollbind
+    exe nr . 'wincmd w'
+    echo "scrollbind is OFF"
+    return
+  endif
+
+  "windo set scrollbind cursorbind nowrap
+  windo set scrollbind nowrap
+  exe nr . 'wincmd w'
+  "syncbind
+  set scrollopt+=hor
+  echo "scrollbind is ON"
+endfunction
+nnoremap <F2> :call SyncWin()<CR>
