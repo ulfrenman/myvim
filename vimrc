@@ -70,8 +70,8 @@ set hidden
 " plugin for info on how to configure.
 " Since the <C-TAB> is not mappable in the terminal I use these mappings to
 " move between buffers:
-map § :bnext<CR>
-map ½ :bprevious<CR>
+nnoremap § :bnext<CR>
+nnoremap ½ :bprevious<CR>
 
 " To avoid autoscrolling when switching buffers (I did not have this problem
 " before but now I have it and its anoying /Ulf 2013-04-25). From
@@ -97,8 +97,8 @@ hi MBEVisibleActiveChanged cterm=NONE ctermfg=1 ctermbg=7
 " Help
 " ===========================================================================
 " Jump to (help) tag and back
-map ä <c-]>
-map Ä <c-t>
+nnoremap ä <c-]>
+nnoremap Ä <c-t>
 
 
 " ===========================================================================
@@ -107,7 +107,7 @@ map Ä <c-t>
 " To make paragraph formatting use shorter key-sequence
 " See :help gw
 "map Q gwap
-map Q gq}
+nnoremap Q gq}
 
 
 " ===========================================================================
@@ -304,8 +304,9 @@ hi def InterestingWord7 cterm=bold ctermfg=0 ctermbg=7
 " ===========================================================================
 " Make shift-up-down scroll the window up-down 2 lines without moving the
 " cursor
-map <S-Up> 2<C-Y>
-map <S-Down> 2<C-E>
+nnoremap <S-Up> 2<C-Y>
+nnoremap <S-Down> 2<C-E>
+
 " Scroll window before the cursor reaches the top and bottom of the window.
 set scrolloff=2
 
