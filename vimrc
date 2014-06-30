@@ -85,12 +85,18 @@ au BufLeave * if !&diff | let b:UR_winview = winsaveview() | endif
 au BufEnter * if exists('b:UR_winview') && !&diff | call winrestview(b:UR_winview) | unlet! b:UR_winview | endif
 
 " MiniBufExpl Colors
-hi MBENormal               cterm=NONE ctermfg=2 ctermbg=0
-hi MBEChanged              cterm=NONE ctermfg=1 ctermbg=0
-hi MBEVisibleNormal        cterm=NONE ctermfg=2 ctermbg=0
-hi MBEVisibleChanged       cterm=NONE ctermfg=1 ctermbg=0
-hi MBEVisibleActiveNormal  cterm=NONE ctermfg=0 ctermbg=7
-hi MBEVisibleActiveChanged cterm=NONE ctermfg=1 ctermbg=7
+function! SetMyMinibufColors()
+    hi MBENormal               cterm=NONE ctermfg=2 ctermbg=0
+    hi MBEChanged              cterm=NONE ctermfg=1 ctermbg=0
+    hi MBEVisibleNormal        cterm=NONE ctermfg=2 ctermbg=0
+    hi MBEVisibleChanged       cterm=NONE ctermfg=1 ctermbg=0
+    hi MBEVisibleActiveNormal  cterm=NONE ctermfg=0 ctermbg=7
+    hi MBEVisibleActiveChanged cterm=NONE ctermfg=1 ctermbg=7
+endfunction
+" Set the colors at startup
+call SetMyMinibufColors()
+" If the colorscheme is changed, set the colors for the MiniBuf again.
+au ColorScheme * call SetMyMinibufColors()
 
 
 " ===========================================================================
