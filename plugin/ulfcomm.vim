@@ -1,5 +1,4 @@
 " Vim global plugin to handle commenting and uncommenting of varius filetypes
-" Last Change: 2013-04-12
 " Maintainer:  Ulf Renman <ulf.renman@gmail.com>
 " License:	   This file is placed in the public domain.
 
@@ -10,16 +9,16 @@ let loaded_ulf_comment = 1
 
 
 " Set default comments
-let s:Comment="#"
-let s:EndComment=""
+let b:UlfComment="#"
+let b:UlfEndComment=""
 " Define specified commentstyle for certain files
-au BufRead,BufNewFile *.sh,*.pl,*.tcl,*.py let s:Comment="#"  | let s:EndComment=""
-au BufRead,BufNewFile *.js                 let s:Comment="//" | let s:EndComment=""
-au BufRead,BufNewFile *.cc,*.php,*.cxx     let s:Comment="//" | let s:EndComment=""
-au BufRead,BufNewFile *.c,*.h,*.css        let s:Comment="/*" | let s:EndComment="*/"
-au BufRead,BufNewFile *.sql                let s:Comment="--" | let s:EndComment=""
-au BufRead,BufNewFile *.tmpl               let s:Comment="##" | let s:EndComment=""
-au filetype vim                            let s:Comment='"'  | let s:EndComment=""
+au BufRead,BufNewFile *.sh,*.pl,*.tcl,*.py let b:UlfComment="#"  | let b:UlfEndComment=""
+au BufRead,BufNewFile *.js                 let b:UlfComment="//" | let b:UlfEndComment=""
+au BufRead,BufNewFile *.cc,*.php,*.cxx     let b:UlfComment="//" | let b:UlfEndComment=""
+au BufRead,BufNewFile *.c,*.h,*.css        let b:UlfComment="/*" | let b:UlfEndComment="*/"
+au BufRead,BufNewFile *.sql                let b:UlfComment="--" | let b:UlfEndComment=""
+au BufRead,BufNewFile *.tmpl               let b:UlfComment="##" | let b:UlfEndComment=""
+au filetype vim                            let b:UlfComment='"'  | let b:UlfEndComment=""
 
 if !hasmapto('<Plug>UlfcommCommentLines')
   map <unique> ö  <Plug>UlfcommCommentLines
@@ -28,8 +27,8 @@ noremap <unique> <script> <Plug>UlfcommCommentLines  <SID>CommentLines
 noremap <SID>CommentLines  :call <SID>CommentLines()<CR>
 
 function s:CommentLines()
-    exe ":s@^\\s*@\\0".s:Comment."@g"
-    exe ":s@$@".s:EndComment."@g"
+    exe ":s@^\\s*@\\0".b:UlfComment."@g"
+    exe ":s@$@".b:UlfEndComment."@g"
     exe "+"
 endfun
 
@@ -41,7 +40,7 @@ noremap <unique> <script> <Plug>UlfcommUnCommentLines  <SID>UnCommentLines
 noremap <SID>UnCommentLines  :call <SID>UnCommentLines()<CR>
 
 function s:UnCommentLines()
-    exe ":s@\\(^\\s*\\)".s:Comment."@\\1@g"
-    exe ":s@".s:EndComment."$@@g"
+    exe ":s@\\(^\\s*\\)".b:UlfComment."@\\1@g"
+    exe ":s@".b:UlfEndComment."$@@g"
     exe "+"
 endfun
