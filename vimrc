@@ -340,3 +340,11 @@ function SyncWin()
   echo "scrollbind is ON"
 endfunction
 nnoremap <F2> :call SyncWin()<CR>
+
+
+" ===========================================================================
+" Window switching
+" ===========================================================================
+" Map <TAB> to cycle through the windows backwards and forward.
+nnoremap <TAB> <C-W>w
+nnoremap <S-TAB> <C-W>W

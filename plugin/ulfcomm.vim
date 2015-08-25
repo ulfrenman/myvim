@@ -30,6 +30,7 @@ function s:CommentLines()
     exe ":s@^\\s*@\\0".b:UlfComment."@g"
     exe ":s@$@".b:UlfEndComment."@g"
     exe "+"
+    echo "Adding comment on line"
 endfun
 
 
@@ -40,7 +41,23 @@ noremap <unique> <script> <Plug>UlfcommUnCommentLines  <SID>UnCommentLines
 noremap <SID>UnCommentLines  :call <SID>UnCommentLines()<CR>
 
 function s:UnCommentLines()
-    exe ":s@\\(^\\s*\\)".b:UlfComment."@\\1@g"
-    exe ":s@".b:UlfEndComment."$@@g"
+    " Make local vars where * is prepended with \\ (escaped) so that the
+    " matching is done correctly later on. Otherwise the * will be part of the
+    " re-pattern as any-number-of-occurrences-selector.
+    " See for example the *.css
+    let l:TmpUlfComment = substitute(b:UlfComment, '*', '\\*','')
+    let l:TmpUlfEndComment = substitute(b:UlfEndComment, '*', '\\*','')
+    try
+        exe ":s@\\(^\\s*\\)".l:TmpUlfComment."@\\1@g"
+        exe ":s@".l:TmpUlfEndComment."$@@g"
+        echo "Removing comment on line"
+    catch /Pattern not found: .*\$/
+        " The end-pattern did not match so undo the start-pattern replacemnet
+        echo "No pattern to remove"
+        silent undo
+    catch /Pattern not found:/
+        " The start-pattern did not match
+        echo "No pattern to remove"
+    endtry
     exe "+"
 endfun
