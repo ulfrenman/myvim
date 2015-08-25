@@ -16,7 +16,7 @@ au BufRead,BufNewFile *.sh,*.pl,*.tcl,*.py let b:UlfComment="#"  | let b:UlfEndC
 au BufRead,BufNewFile *.js                 let b:UlfComment="//" | let b:UlfEndComment=""
 au BufRead,BufNewFile *.cc,*.php,*.cxx     let b:UlfComment="//" | let b:UlfEndComment=""
 au BufRead,BufNewFile *.c,*.h,*.css        let b:UlfComment="/*" | let b:UlfEndComment="*/"
-au BufRead,BufNewFile *.sql                let b:UlfComment="--" | let b:UlfEndComment=""
+au BufRead,BufNewFile *.sql,*.lua          let b:UlfComment="--" | let b:UlfEndComment=""
 au BufRead,BufNewFile *.tmpl               let b:UlfComment="##" | let b:UlfEndComment=""
 au filetype vim                            let b:UlfComment='"'  | let b:UlfEndComment=""
 
