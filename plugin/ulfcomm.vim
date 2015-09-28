@@ -10,14 +10,14 @@ let loaded_ulf_comment = 1
 
 
 " Set default comments
-let s:Comment="#"
+let s:Comment="BLA"
 let s:EndComment=""
 " Define specified commentstyle for certain files
 au BufRead,BufNewFile *.sh,*.pl,*.tcl,*.py let s:Comment="#"  | let s:EndComment=""
 au BufRead,BufNewFile *.js                 let s:Comment="//" | let s:EndComment=""
 au BufRead,BufNewFile *.cc,*.php,*.cxx     let s:Comment="//" | let s:EndComment=""
 au BufRead,BufNewFile *.c,*.h,*.css        let s:Comment="/*" | let s:EndComment="*/"
-au BufRead,BufNewFile *.sql                let s:Comment="--" | let s:EndComment=""
+au BufRead,BufNewFile *.sql,*.lua          let s:Comment="--" | let s:EndComment=""
 au BufRead,BufNewFile *.tmpl               let s:Comment="##" | let s:EndComment=""
 au filetype vim                            let s:Comment='"'  | let s:EndComment=""
 
