@@ -24,6 +24,8 @@ set showmatch
 
 " always show statusline
 set laststatus=2
+" Emulate statusline, but use full- instead of relative-path
+set statusline=%<[%-0.20{getcwd()}]\ %F\ %h%m%r%y%=%-14.(%l,%c%V%)\ %P
 
 " highlight previous search pattern
 set hlsearch
@@ -68,22 +70,41 @@ set hidden
 " plugin for info on how to configure.
 " Since the <C-TAB> is not mappable in the terminal I use these mappings to
 " move between buffers:
-map § :bnext<CR>
-map ½ :bprevious<CR>
+nnoremap § :bnext<CR>
+nnoremap ½ :bprevious<CR>
 
 " To avoid autoscrolling when switching buffers (I did not have this problem
 " before but now I have it and its anoying /Ulf 2013-04-25). From
 "   http://vim.wikia.com/wiki/Avoid_scrolling_when_switch_buffers
-au BufLeave * if !&diff | let b:winview = winsaveview() | endif
-au BufEnter * if exists('b:winview') && !&diff | call winrestview(b:winview) | endif
+" A bug was reproted and fixed in the code by adding "unlet! b:winview |".
+" This bug made SyncWin behave strangely. See here for bug info:
+"   https://github.com/garbas/vim-snipmate/issues/161
+" Still not working. Adding "UR_" to var since it seems to be conflicting in
+" some weird way with something else. Seems to be working now.
+au BufLeave * if !&diff | let b:UR_winview = winsaveview() | endif
+au BufEnter * if exists('b:UR_winview') && !&diff | call winrestview(b:UR_winview) | unlet! b:UR_winview | endif
+
+" MiniBufExpl Colors
+function! SetMyMinibufColors()
+    hi MBENormal               cterm=NONE ctermfg=2 ctermbg=0
+    hi MBEChanged              cterm=NONE ctermfg=1 ctermbg=0
+    hi MBEVisibleNormal        cterm=NONE ctermfg=2 ctermbg=0
+    hi MBEVisibleChanged       cterm=NONE ctermfg=1 ctermbg=0
+    hi MBEVisibleActiveNormal  cterm=NONE ctermfg=0 ctermbg=7
+    hi MBEVisibleActiveChanged cterm=NONE ctermfg=1 ctermbg=7
+endfunction
+" Set the colors at startup
+call SetMyMinibufColors()
+" If the colorscheme is changed, set the colors for the MiniBuf again.
+au ColorScheme * call SetMyMinibufColors()
 
 
 " ===========================================================================
 " Help
 " ===========================================================================
 " Jump to (help) tag and back
-map ä <c-]>
-map Ä <c-t>
+nnoremap ä <c-]>
+nnoremap Ä <c-t>
 
 
 " ===========================================================================
@@ -92,14 +113,14 @@ map Ä <c-t>
 " To make paragraph formatting use shorter key-sequence
 " See :help gw
 "map Q gwap
-map Q gq}
+nnoremap Q gq}
 
 
 " ===========================================================================
 " Diff
 " ===========================================================================
 " How will vimdiff will work and look
-set diffopt=filler,context:1
+set diffopt=vertical,filler,context:1
 if &diff
   colorscheme pablo
 endif
@@ -289,11 +310,44 @@ hi def InterestingWord7 cterm=bold ctermfg=0 ctermbg=7
 " ===========================================================================
 " Make shift-up-down scroll the window up-down 2 lines without moving the
 " cursor
-map <S-Up> 2<C-Y>
-map <S-Down> 2<C-E>
+nnoremap <S-Up> 2<C-Y>
+nnoremap <S-Down> 2<C-E>
+
 " Scroll window before the cursor reaches the top and bottom of the window.
 set scrolloff=2
 
+" Bind all the window together for scrolling
+"   http://stackoverflow.com/a/18466534/42580
+let s:sync_win = 0
+function SyncWin()
+
+  let nr = winnr()
+  let s:sync_win = 1 - s:sync_win
+
+  if ! s:sync_win
+    "windo set noscrollbind nocursorbind
+    windo set noscrollbind
+    exe nr . 'wincmd w'
+    echo "scrollbind is OFF"
+    return
+  endif
+
+  "windo set scrollbind cursorbind nowrap
+  windo set scrollbind nowrap
+  exe nr . 'wincmd w'
+  "syncbind
+  set scrollopt+=hor
+  echo "scrollbind is ON"
+endfunction
+nnoremap <F2> :call SyncWin()<CR>
+
+
+" ===========================================================================
+" Window switching
+" ===========================================================================
+" Map <TAB> to cycle through the windows backwards and forward.
+nnoremap <TAB> <C-W>w
+nnoremap <S-TAB> <C-W>W
 
 " ===========================================================================
 " Mindstorms EV3 hack...
