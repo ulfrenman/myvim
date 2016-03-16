@@ -293,3 +293,21 @@ map <S-Up> 2<C-Y>
 map <S-Down> 2<C-E>
 " Scroll window before the cursor reaches the top and bottom of the window.
 set scrolloff=2
+
+
+" ===========================================================================
+" Mindstorms EV3 hack...
+" ===========================================================================
+" This is used when the brick is running ev3dev. It is used to automatically
+" copy the file edited to the brick and run it. It is highly specialiced and
+" could need some more work and generalization...
+function! WriteDistributeAndRun(n)
+    write
+    silent !clear
+    silent !echo "Copy file..."
+    execute "silent !scp %:p ev3wifi:%:p"
+    silent !echo "Run file..."
+    execute "!ssh ev3wifi %:p"
+    redraw! 
+endfunction
+command WX call WriteDistributeAndRun(1) 
