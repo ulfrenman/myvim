@@ -353,3 +353,21 @@ nnoremap <S-TAB> <C-W>W
 " https://vi.stackexchange.com/a/13088/12372
 "nnoremap <F8> <C-W>w:bnext<CR><C-W>W
 "nnoremap <S-F8> <C-W>w:bprevious<CR><C-W>W
+
+
+" ===========================================================================
+" Mindstorms EV3 hack...
+" ===========================================================================
+" This is used when the brick is running ev3dev. It is used to automatically
+" copy the file edited to the brick and run it. It is highly specialiced and
+" could need some more work and generalization...
+function! WriteDistributeAndRun(n)
+    write
+    silent !clear
+    silent !echo "Copy file..."
+    execute "silent !scp %:p ev3wifi:%:p"
+    silent !echo "Run file..."
+    execute "!ssh ev3wifi %:p"
+    redraw! 
+endfunction
+command WX call WriteDistributeAndRun(1) 
