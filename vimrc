@@ -224,7 +224,7 @@ function! AlterTextWidth(n)
 endfunction
 nnoremap <F10> :call ToggleColorColumn()<CR>
 inoremap <F10> <ESC>:call ToggleColorColumn()<CR>a
-nnoremap <S-F10> :call AlterTextWidth(+1)<CR>
+nnoremap <S-C-F10> :call AlterTextWidth(+1)<CR>
 nnoremap <C-F10> :call AlterTextWidth(-1)<CR>
 
 
@@ -348,3 +348,8 @@ nnoremap <F2> :call SyncWin()<CR>
 " Map <TAB> to cycle through the windows backwards and forward.
 nnoremap <TAB> <C-W>w
 nnoremap <S-TAB> <C-W>W
+
+" Cycle buffer in the 'next'-window. An example that I created here:
+" https://vi.stackexchange.com/a/13088/12372
+"nnoremap <F8> <C-W>w:bnext<CR><C-W>W
+"nnoremap <S-F8> <C-W>w:bprevious<CR><C-W>W

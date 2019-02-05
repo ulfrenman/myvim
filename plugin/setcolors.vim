@@ -16,7 +16,11 @@ if v:version < 700 || exists('loaded_setcolors') || &cp
 endif
 
 let loaded_setcolors = 1
-let s:mycolors = ['pablo', 'default']  " colorscheme names that we use to set color
+" After upgrading to ubuntu 18.04 the default colorscheme is 'ron' (that is
+" not the same as 'default').
+let s:mycolors = ['pablo', 'default', 'slate','torte', 'ron']  " colorscheme names that we use to set color
+" If you want to test all colorschemes then set mycolors to an empty list
+"let s:mycolors = []  " colorscheme names that we use to set color
 
 " Set list of color scheme names that we will use, except
 " argument 'now' actually changes the current color scheme.
