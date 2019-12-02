@@ -11,7 +11,7 @@ links:
 update_modules:
 	git submodule foreach git pull origin master
 	# Make sure the docs for the modules are generated
-	vim -c 'call pathogen#helptags()|q'
+	#vim -c 'call pathogen#helptags()|q'
 
 make_master:
 	git checkout master
