@@ -7,9 +7,6 @@
 [submodule "bundle/minibufexplorer"]
 	path = bundle/minibufexplorer
 	url = https://github.com/fholgado/minibufexpl.vim.git
-[submodule "bundle/gnupg"]
-	path = bundle/gnupg
-	url = https://github.com/jamessan/vim-gnupg
 [submodule "bundle/gundo"]
 	path = bundle/gundo
 	url = https://github.com/sjl/gundo.vim.git

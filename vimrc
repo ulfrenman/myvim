@@ -371,3 +371,10 @@ function! WriteDistributeAndRun(n)
     redraw! 
 endfunction
 command WX call WriteDistributeAndRun(1) 
+
+" ===========================================================================
+" Search for highlighted text
+" ===========================================================================
+" Use // to saerch for the selected text.
+" This is from https://vim.fandom.com/wiki/Search_for_visually_selected_text
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
